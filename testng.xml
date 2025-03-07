@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="G:/GitHub/SimbirSoftTask">
+        <classes>
+            <class name="com.practice_automation.tests.BasePageTest">
+                <methods>
+                    <include name="testBasePage"/>
+                    <include name="testInputNameField"/>
+                    <include name="testInputPasswordField"/>
+                    <include name="testInputCheckBoxes"/>
+                    <include name="testInputRadiobutton"/>
+                    <include name="testDropDownMenu"/>
+                    <include name="testFillingEmailField"/>
+                    <include name="testFillingMessageField"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
