@@ -1,6 +1,8 @@
 package com.practice_automation.tests;
 
+import com.practice_automation.pages.FieldsAndForms;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -9,61 +11,61 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 public class BasePageTest extends BaseTest {
+    FieldsAndForms forms = new FieldsAndForms();
 
     @Test
     public void testBasePage() {
-        String pageTitle = driver.getTitle();
+        String pageTitle = forms.getPageTitle();
         Assert.assertEquals(pageTitle, "Form Fields | Practice Automation");
     }
 
     @Test(priority = 1, description = "Заполнение поля Name")
     public void testInputNameField() {
-        WebElement nameInput = driver.findElement(By.xpath("//input[@id='name-input']"));
-        String inputText = "Сергей";
-        nameInput.sendKeys(inputText);
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-//        wait.until(ExpectedConditions.attributeToBe(nameInput, "Сергей", "Сергей"));
-//        String actualText = nameInput.getAttribute("Сергей");
-//        Assert.assertEquals(actualText, inputText, "Текст в поле не совпадает с ожидаемым");
-
+        String displayedText = forms.getAssertInputName();
+        Assert.assertEquals(displayedText, inputText, "Введенное и отображаемое имена не совпадают");
     }
 
     @Test(priority = 2, description = "Заполнение поля Password")
     public void testInputPasswordField() {
-        WebElement password = driver.findElement(By.xpath("//label/input[@type='password']"));
-        password.sendKeys("12345");
-        //Assert.assertEquals(password, "12345");
-
+        String enteredPassword = forms.getAssertInputPassword();
+        Assert.assertEquals(enteredPassword, inputPassword, "Введенный пароль неверен");
     }
 
-    @Test(priority = 3, description = "Выбор чекбоксов")
-    public void testInputCheckBoxes() {
-        WebElement checkboxMilk = driver.findElement(By.xpath("//input[@value = 'Milk']"));
-        checkboxMilk.click();
-        WebElement checkboxCoffee = driver.findElement(By.cssSelector("input[value = 'Coffee']"));
-        checkboxCoffee.click();
+    @Test(priority = 3, description = "Выбор Milk checkbox")
+    public void testInputCheckBoxMilk() {
+        WebElement checkboxMilk = forms.getInputCheckBoxMilk();
+        boolean isSelected = checkboxMilk.isSelected();
+        Assert.assertTrue(isSelected, "Checkbox Milk не был выбран после нажатия");
     }
 
-    @Test(priority = 4, description = "Выбор radiobutton")
+    @Test(priority = 4, description = "Выбор Coffee checkbox")
+    public void testInputCheckBoxCoffee() {
+        WebElement checkboxCoffee = forms.getInputCheckboxCoffee();
+        boolean isSelected = checkboxCoffee.isSelected();
+        Assert.assertTrue(isSelected, "Checkbox Coffee не был выбран после нажатия");
+    }
+
+    @Test(priority = 5, description = "Выбор radiobutton")
     public void testInputRadiobutton() {
-        WebElement radiobutton = driver.findElement(By.cssSelector("input[value = 'Yellow']"));
-        radiobutton.click();
+        WebElement radiobutton = forms.getInputRadiobutton();
+        boolean isSelected = radiobutton.isSelected();
+        Assert.assertTrue(isSelected, "Radiobutton не была выбрана после нажатия");
     }
 
-    @Test(priority = 5, description = "Выбор элемента выпадающего меню")
+    @Test(priority = 6, description = "Выбор элемента выпадающего меню")
     public void testDropDownMenu() {
         WebElement dropDownMenu = driver.findElement(By.id("automation"));
         Select select = new Select(dropDownMenu);
         select.selectByVisibleText("Yes");
     }
 
-    @Test(priority = 6, description = "Заполнения поля email")
+    @Test(priority = 7, description = "Заполнения поля email")
     public void testFillingEmailField() {
         WebElement emailField = driver.findElement(By.id("email"));
         emailField.sendKeys("sergey.vyshkvarok@gmail.com");
     }
 
-    @Test(priority = 7, description = "Заполнение поля Message")
+    @Test(priority = 8, description = "Заполнение поля Message")
     public void testFillingMessageField() {
         WebElement ulElement = driver.findElement(By.xpath("//form/ul"));
         List<WebElement> liElements = ulElement.findElements(By.tagName("li"));

@@ -1,21 +1,19 @@
 package com.practice_automation.tests;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import com.practice_automation.pages.BasePage;
+import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
-public class BaseTest {
-    WebDriver driver = new ChromeDriver();
+public class BaseTest extends BasePage {
 
     @BeforeSuite
     public void setup() {
-        driver.manage().window().maximize();
-        driver.get("https://practice-automation.com/form-fields/");
+        Assert.assertTrue(goToBasePage(), "Ошибка перехода на тестируемую страницу");
     }
 
     @AfterSuite
     public void tearDown() {
-        driver.quit();
+        closeBrowser();
     }
 }
