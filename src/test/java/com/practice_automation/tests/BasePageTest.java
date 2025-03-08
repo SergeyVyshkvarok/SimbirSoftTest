@@ -2,12 +2,14 @@ package com.practice_automation.tests;
 
 import com.practice_automation.pages.FieldsAndForms;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.List;
 
 public class BasePageTest extends BaseTest {
@@ -33,21 +35,24 @@ public class BasePageTest extends BaseTest {
 
     @Test(priority = 3, description = "Выбор Milk checkbox")
     public void testInputCheckBoxMilk() {
-        WebElement checkboxMilk = forms.getInputCheckBoxMilk();
-        boolean isSelected = checkboxMilk.isSelected();
-        Assert.assertTrue(isSelected, "Checkbox Milk не был выбран после нажатия");
+        WebElement checkboxMilk = forms.clickCheckBoxMilkAndCheckCondition();
+        boolean MilkisSelected = checkboxMilk.isSelected();
+        Assert.assertTrue(MilkisSelected, "Checkbox Milk не был выбран после нажатия");
     }
 
     @Test(priority = 4, description = "Выбор Coffee checkbox")
-    public void testInputCheckBoxCoffee() {
-        WebElement checkboxCoffee = forms.getInputCheckboxCoffee();
-        boolean isSelected = checkboxCoffee.isSelected();
-        Assert.assertTrue(isSelected, "Checkbox Coffee не был выбран после нажатия");
+    public void testSelectCheckBoxCoffee() {
+        WebElement checkboxCoffee = forms.clickCheckBoxCoffeeAndCheckCondition();
+        checkboxCoffee.click();
+        boolean CoffeeisSelected = checkboxCoffee.isSelected();
+        Assert.assertTrue(CoffeeisSelected, "Checkbox Coffee не был выбран после нажатия");
     }
 
     @Test(priority = 5, description = "Выбор radiobutton")
-    public void testInputRadiobutton() {
-        WebElement radiobutton = forms.getInputRadiobutton();
+    public void testSelectRadiobutton() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebElement radiobutton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Yellow']")));
+        radiobutton.click();
         boolean isSelected = radiobutton.isSelected();
         Assert.assertTrue(isSelected, "Radiobutton не была выбрана после нажатия");
     }
@@ -70,11 +75,9 @@ public class BasePageTest extends BaseTest {
         WebElement ulElement = driver.findElement(By.xpath("//form/ul"));
         List<WebElement> liElements = ulElement.findElements(By.tagName("li"));
 
-        //Определение количества инструментов, описанных в пункте Automation tools
         int count = liElements.size();
         WebElement messageField = driver.findElement(By.xpath("//textarea[@id='message']"));
 
-        //Определение  инструмента из списка Automation tools, содержащего наибольшее количество символов
         String maxSimbols = "";
         int maxLength = 0;
         for (WebElement li:liElements) {
@@ -89,5 +92,10 @@ public class BasePageTest extends BaseTest {
                 "наибольшее количество символов: " + maxSimbols);
     }
 
+    @Test
+    public void testPressingSubmitButton() {
+        WebElement SubmitButton = driver.findElement(By.id("submit-btn"));
+        SubmitButton.click();
+    }
 
 }
