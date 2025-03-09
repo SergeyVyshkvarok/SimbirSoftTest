@@ -14,6 +14,10 @@ public class BaseTest extends BasePage {
 
     @AfterSuite
     public void tearDown() {
-        closeBrowser();
+        if (driver != null) {
+            closeBrowser();
+        }
     }
 }
+
+

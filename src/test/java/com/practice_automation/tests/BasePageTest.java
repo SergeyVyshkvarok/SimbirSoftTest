@@ -2,6 +2,7 @@ package com.practice_automation.tests;
 
 import com.practice_automation.pages.FieldsAndForms;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -23,7 +24,7 @@ public class BasePageTest extends BaseTest {
 
     @Test(priority = 1, description = "Заполнение поля Name")
     public void testInputNameField() {
-        String displayedText = forms.getAssertInputName();
+        String displayedText = String.valueOf(forms.getAssertInputName());
         Assert.assertEquals(displayedText, inputText, "Введенное и отображаемое имена не совпадают");
     }
 
@@ -36,8 +37,8 @@ public class BasePageTest extends BaseTest {
     @Test(priority = 3, description = "Выбор Milk checkbox")
     public void testInputCheckBoxMilk() {
         WebElement checkboxMilk = forms.clickCheckBoxMilkAndCheckCondition();
-        boolean MilkisSelected = checkboxMilk.isSelected();
-        Assert.assertTrue(MilkisSelected, "Checkbox Milk не был выбран после нажатия");
+        boolean MilkIsSelected = checkboxMilk.isSelected();
+        Assert.assertTrue(MilkIsSelected, "Checkbox Milk не был выбран после нажатия");
     }
 
     @Test(priority = 4, description = "Выбор Coffee checkbox")
@@ -96,6 +97,9 @@ public class BasePageTest extends BaseTest {
     public void testPressingSubmitButton() {
         WebElement SubmitButton = driver.findElement(By.id("submit-btn"));
         SubmitButton.click();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("alert('Message received!');");
     }
+
 
 }

@@ -8,7 +8,8 @@
                     <include name="testBasePage"/>
                     <include name="testInputNameField"/>
                     <include name="testInputPasswordField"/>
-                    <include name="testInputCheckBoxes"/>
+                    <include name="testInputCheckBoxMilk"/>
+                    <include name="testInputCheckBoxCoffee"/>
                     <include name="testInputRadiobutton"/>
                     <include name="testDropDownMenu"/>
                     <include name="testFillingEmailField"/>

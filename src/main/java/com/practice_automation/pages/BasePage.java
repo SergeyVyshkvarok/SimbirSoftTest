@@ -13,7 +13,8 @@ public class BasePage {
     public String browser;
     public String baseUrl;
     public Properties properties;
-    protected String inputText = "Сергей";
+    public String inputText = "Сергей";
+    protected String email = "sergey.vyshkvarok@gmail.com";
     protected String inputPassword = "TestPassword_12345&";
 
     private void loadProperties() {
