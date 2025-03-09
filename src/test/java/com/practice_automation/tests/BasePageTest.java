@@ -1,6 +1,7 @@
 package com.practice_automation.tests;
 
 import com.practice_automation.pages.FieldsAndForms;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -44,16 +45,20 @@ public class BasePageTest extends BaseTest {
     @Test(priority = 4, description = "Выбор Coffee checkbox")
     public void testSelectCheckBoxCoffee() {
         WebElement checkboxCoffee = forms.clickCheckBoxCoffeeAndCheckCondition();
-        checkboxCoffee.click();
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", checkboxCoffee);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", checkboxCoffee);
+        //checkboxCoffee.click();
         boolean CoffeeisSelected = checkboxCoffee.isSelected();
         Assert.assertTrue(CoffeeisSelected, "Checkbox Coffee не был выбран после нажатия");
     }
 
     @Test(priority = 5, description = "Выбор radiobutton")
     public void testSelectRadiobutton() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(6));
         WebElement radiobutton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Yellow']")));
-        radiobutton.click();
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", radiobutton);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", radiobutton);
+        //radiobutton.click();
         boolean isSelected = radiobutton.isSelected();
         Assert.assertTrue(isSelected, "Radiobutton не была выбрана после нажатия");
     }
@@ -93,13 +98,16 @@ public class BasePageTest extends BaseTest {
                 "наибольшее количество символов: " + maxSimbols);
     }
 
-    @Test
+    @Test(priority = 9, description = "Нажатие кнопки Submit")
     public void testPressingSubmitButton() {
-        WebElement SubmitButton = driver.findElement(By.id("submit-btn"));
-        SubmitButton.click();
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("alert('Message received!');");
+        WebElement submitButton = driver.findElement(By.id("submit-btn"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", submitButton);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", submitButton);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        String alertText = alert.getText();
+        String expectedText = "Message received!";
+        Assert.assertEquals(alertText, expectedText, "Текст alert не совпадает с ожидаемым");
+        alert.accept();
     }
-
-
 }

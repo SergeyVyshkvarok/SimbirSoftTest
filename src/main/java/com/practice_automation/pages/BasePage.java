@@ -2,6 +2,7 @@ package com.practice_automation.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,7 +23,7 @@ public class BasePage {
 
         try {
             properties = new Properties();
-            fis = new FileInputStream("G:\\GitHub\\SimbirSoftTask\\src\\main\\java\\com\\practice_automation\\config\\config.properties");
+            fis = new FileInputStream("src/main/resources/config.properties");
             properties.load(fis);
 
             browser = properties.getProperty("browser");
@@ -42,7 +43,9 @@ public class BasePage {
 
     private void openBrowser() {
         if (browser.equals("chrome")) {
-            driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--start-maximized");
+            driver = new ChromeDriver(options);
         }
         driver.manage().window().maximize();
     }
